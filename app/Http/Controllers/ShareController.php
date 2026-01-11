@@ -17,15 +17,9 @@ class ShareController extends Controller
     }
 
     /**
-     * Share entities with users
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
-     * @throws Exception
+     * Create share request
      */
-    public function share(Request $request): JsonResponse
+    public function create(Request $request): JsonResponse
     {
         try {
             $validated = $request->validate([
@@ -36,7 +30,7 @@ class ShareController extends Controller
                 'user_ids.*' => 'required|integer|exists:users,id',
             ]);
 
-            $result = $this->service->shareEntities(
+            $result = $this->service->createShareRequest(
                 $validated['entity_ids'],
                 $validated['entity_type'],
                 $validated['user_ids']
@@ -45,6 +39,90 @@ class ShareController extends Controller
             return response()->json($result);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Get received share requests
+     */
+    public function received(): JsonResponse
+    {
+        try {
+            $requests = $this->service->getReceivedRequests();
+
+            return response()->json(['data' => $requests]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Get sent share requests
+     */
+    public function sent(): JsonResponse
+    {
+        try {
+            $requests = $this->service->getSentRequests();
+
+            return response()->json(['data' => $requests]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Get pending requests count
+     */
+    public function count(): JsonResponse
+    {
+        try {
+            $count = $this->service->getPendingCount();
+
+            return response()->json(['count' => $count]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Accept share request
+     */
+    public function accept(int $id): JsonResponse
+    {
+        try {
+            $result = $this->service->acceptRequest($id);
+
+            return response()->json($result);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Reject share request
+     */
+    public function reject(int $id): JsonResponse
+    {
+        try {
+            $result = $this->service->rejectRequest($id);
+
+            return response()->json($result);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Cancel sent share request
+     */
+    public function cancel(int $id): JsonResponse
+    {
+        try {
+            $result = $this->service->cancelRequest($id);
+
+            return response()->json($result);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }

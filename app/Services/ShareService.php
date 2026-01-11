@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ShareRequest;
 use Exception;
 
 class ShareService
@@ -11,7 +12,7 @@ class ShareService
     ) {}
 
     /**
-     * Share entities with users - copy entities to user's database
+     * Create share request (not copy yet - just request)
      *
      * @param array $entityIds
      * @param string $entityType
@@ -19,7 +20,143 @@ class ShareService
      *
      * @return array
      */
-    public function shareEntities(array $entityIds, string $entityType, array $userIds): array
+    public function createShareRequest(array $entityIds, string $entityType, array $userIds): array
+    {
+        $senderId = auth()->id();
+        $requestsCreated = 0;
+
+        foreach ($userIds as $receiverId) {
+            ShareRequest::create([
+                'sender_id' => $senderId,
+                'receiver_id' => $receiverId,
+                'entity_type' => $entityType,
+                'entity_ids' => $entityIds,
+                'status' => 'pending',
+            ]);
+            $requestsCreated++;
+        }
+
+        return [
+            'message' => "Created {$requestsCreated} share requests",
+        ];
+    }
+
+    /**
+     * Get received pending share requests
+     *
+     * @return array
+     */
+    public function getReceivedRequests(): array
+    {
+        return ShareRequest::forReceiver(auth()->id())
+            ->pending()
+            ->with('sender:id,name,email')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->toArray();
+    }
+
+    /**
+     * Get sent share requests
+     *
+     * @return array
+     */
+    public function getSentRequests(): array
+    {
+        return ShareRequest::forSender(auth()->id())
+            ->with('receiver:id,name,email')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->toArray();
+    }
+
+    /**
+     * Get pending requests count
+     *
+     * @return int
+     */
+    public function getPendingCount(): int
+    {
+        return ShareRequest::forReceiver(auth()->id())->pending()->count();
+    }
+
+    /**
+     * Accept share request - this calls the existing shareEntities logic
+     *
+     * @param int $requestId
+     *
+     * @return array
+     */
+    public function acceptRequest(int $requestId): array
+    {
+        $request = ShareRequest::forReceiver(auth()->id())->pending()->find($requestId);
+
+        if (!$request) {
+            throw new Exception('Share request not found');
+        }
+
+        // Use existing shareEntities logic - copy entities to receiver
+        $result = $this->shareEntitiesToUser(
+            $request->entity_ids,
+            $request->entity_type,
+            auth()->id()
+        );
+
+        $request->update(['status' => 'accepted']);
+
+        return $result;
+    }
+
+    /**
+     * Reject share request
+     *
+     * @param int $requestId
+     *
+     * @return array
+     */
+    public function rejectRequest(int $requestId): array
+    {
+        $request = ShareRequest::forReceiver(auth()->id())->pending()->find($requestId);
+
+        if (!$request) {
+            throw new Exception('Share request not found');
+        }
+
+        $request->update(['status' => 'rejected']);
+
+        return ['message' => 'Share request rejected'];
+    }
+
+    /**
+     * Cancel sent share request
+     *
+     * @param int $requestId
+     *
+     * @return array
+     */
+    public function cancelRequest(int $requestId): array
+    {
+        $request = ShareRequest::forSender(auth()->id())->pending()->find($requestId);
+
+        if (!$request) {
+            throw new Exception('Share request not found');
+        }
+
+        $request->delete();
+
+        return ['message' => 'Share request cancelled'];
+    }
+
+    /**
+     * Share entities to specific user - copy entities to user's database
+     *
+     * @param array $entityIds
+     * @param string $entityType
+     * @param int $targetUserId
+     *
+     * @return array
+     */
+    private function shareEntitiesToUser(array $entityIds, string $entityType, int $targetUserId): array
     {
         $modelClass = $this->getEntityClass($entityType);
         $copiedCount = 0;
@@ -31,21 +168,19 @@ class ShareService
                 continue;
             }
 
-            foreach ($userIds as $targetUserId) {
-                $this->copyEntityToUser($originalEntity, $targetUserId);
-                $copiedCount++;
-            }
+            $this->copyEntityToUser($originalEntity, $targetUserId);
+            $copiedCount++;
         }
 
         $this->logger->log(
             auth()->user()->name,
             "{$copiedCount} entities",
             $entityType,
-            'shared'
+            'received via share'
         );
 
         return [
-            'message' => "Successfully shared {$copiedCount} entities",
+            'message' => "Received {$copiedCount} entities",
             'copied_count' => $copiedCount,
         ];
     }
@@ -53,10 +188,10 @@ class ShareService
     /**
      * Copy entity to user's database
      *
-     * @param mixed $originalEntity
+     * @param Model $originalEntity
      * @param int $targetUserId
      *
-     * @return mixed
+     * @return Model
      */
     private function copyEntityToUser($originalEntity, int $targetUserId)
     {
