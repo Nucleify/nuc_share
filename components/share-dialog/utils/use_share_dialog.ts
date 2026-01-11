@@ -25,6 +25,7 @@ export function useShareDialog(
   const { apiSuccess } = useApiSuccess()
 
   async function loadFriends(): Promise<void> {
+    loading.value = true
     await friendship.getAllFriendships()
     friends.value = (friendship.results.value || [])
       .filter((f: NucFriendshipObjectInterface) => f.status === 'accepted')
@@ -33,6 +34,7 @@ export function useShareDialog(
         name: f.friend.name,
         email: f.friend.email,
       }))
+    loading.value = false
   }
 
   watch(

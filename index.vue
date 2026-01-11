@@ -1,5 +1,6 @@
 <template>
   <ad-popover
+    v-if="!loading"
     dismissable
     icon="prime:inbox"
     :position="position"
@@ -18,7 +19,7 @@ defineProps<{
   position: PositionType
 }>()
 
-const { loadAll } = useShareRequests()
+const { loading, loadAll } = useShareRequests()
 
 onMounted(() => {
   loadAll()

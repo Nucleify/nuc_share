@@ -1,7 +1,7 @@
 <template>
   <nuc-dialog
     :entity="props.adType"
-    :visible="props.visible"
+    :visible="props.visible && !loading"
     :modal="true"
     :draggable="false"
     title="Share Entities"
@@ -65,6 +65,7 @@ const emits = defineEmits(['update:visible'])
 const {
   friends,
   selectedEntities,
+  loading,
   isConfirmDisabled,
   handleShare,
   handleCancel,
