@@ -4,7 +4,7 @@
     icon="prime:inbox"
     :position="position"
     popover-class="share-inbox-popover"
-    button-text="Share Inbox"
+    :button-text="isMobile() ? '' : 'Share Inbox'"
     button-class="share-inbox-toggle"
   >
     <nuc-share-popover />
