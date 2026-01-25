@@ -5,14 +5,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function (): void {
     Route::middleware(['web', 'auth'])->group(function (): void {
-        Route::prefix('share')->group(function (): void {
-            Route::post('/', [ShareController::class, 'create']);
-            Route::get('/received', [ShareController::class, 'received']);
-            Route::get('/sent', [ShareController::class, 'sent']);
-            Route::get('/count', [ShareController::class, 'count']);
-            Route::post('/{id}/accept', [ShareController::class, 'accept']);
-            Route::post('/{id}/reject', [ShareController::class, 'reject']);
-            Route::post('/{id}/cancel', [ShareController::class, 'cancel']);
+        Route::controller(ShareController::class)->prefix('share')->name('share.')->group(function (): void {
+            Route::post('/', 'create')->name('create');
+            Route::get('/received', 'received')->name('received');
+            Route::get('/sent', 'sent')->name('sent');
+            Route::get('/count', 'count')->name('count');
+            Route::post('/{id}/accept', 'accept')->name('accept');
+            Route::post('/{id}/reject', 'reject')->name('reject');
+            Route::post('/{id}/cancel', 'cancel')->name('cancel');
         });
     });
 });
