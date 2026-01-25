@@ -12,49 +12,56 @@ beforeEach(function (): void {
 });
 
 describe('401', function (): void {
-    test('create share request api', function (): void {
-        $this->postJson('/api/share', [
-            'entity_ids' => [1, 2],
-            'entity_type' => 'article',
-            'user_ids' => [1],
-        ])
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('get received requests api', function (): void {
-        $this->getJson('/api/share/received')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('get sent requests api', function (): void {
-        $this->getJson('/api/share/sent')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('get pending count api', function (): void {
-        $this->getJson('/api/share/count')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('accept share request api', function (): void {
-        $this->postJson('/api/share/1/accept')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('reject share request api', function (): void {
-        $this->postJson('/api/share/1/reject')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
-
-    test('cancel share request api', function (): void {
-        $this->postJson('/api/share/1/cancel')
-            ->assertStatus(401)
-            ->assertJson(['message' => 'Unauthenticated.']);
-    });
+    apiTestArray([
+        'create share request api' => [
+            'method' => 'POST',
+            'route' => 'share.create',
+            'status' => 401,
+            'data' => [
+                'entity_ids' => [1, 2],
+                'entity_type' => 'article',
+                'user_ids' => [1],
+            ],
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'get received requests api' => [
+            'method' => 'GET',
+            'route' => 'share.received',
+            'status' => 401,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'get sent requests api' => [
+            'method' => 'GET',
+            'route' => 'share.sent',
+            'status' => 401,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'get pending count api' => [
+            'method' => 'GET',
+            'route' => 'share.count',
+            'status' => 401,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'accept share request api' => [
+            'method' => 'POST',
+            'route' => 'share.accept',
+            'status' => 401,
+            'id' => 1,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'reject share request api' => [
+            'method' => 'POST',
+            'route' => 'share.reject',
+            'status' => 401,
+            'id' => 1,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+        'cancel share request api' => [
+            'method' => 'POST',
+            'route' => 'share.cancel',
+            'status' => 401,
+            'id' => 1,
+            'fragment' => ['message' => 'Unauthenticated.'],
+        ],
+    ]);
 });
