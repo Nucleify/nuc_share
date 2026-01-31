@@ -220,14 +220,10 @@ class ShareService
             'article' => \App\Models\Article::class,
             'contact' => \App\Models\Contact::class,
             'money' => \App\Models\Money::class,
-            'card' => \App\Models\Card::class,
-            'task' => \App\Models\Task::class,
             'file' => \App\Models\File::class,
             'documentation' => \App\Models\Documentation::class,
             'question' => \App\Models\Question::class,
             'technology' => \App\Models\Technology::class,
-            'link' => \App\Models\Link::class,
-            'feature' => \App\Models\Feature::class,
         ];
 
         return $entityMap[$entityType] ?? throw new Exception("Unknown entity type: {$entityType}");
