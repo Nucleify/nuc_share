@@ -1,4 +1,4 @@
-import type { ShareRequestInterface } from 'atomic'
+import type { ShareRequestInterface } from 'nucleify'
 
 export const mockShareRequest: ShareRequestInterface = {
   id: 99,

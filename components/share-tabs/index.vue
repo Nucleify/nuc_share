@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ShareTabType } from 'atomic'
+import type { ShareTabType } from 'nucleify'
 
 defineProps<{
   activeTab: ShareTabType

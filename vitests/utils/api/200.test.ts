@@ -1,15 +1,14 @@
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
 
-import * as atomic from 'atomic'
-
+import * as nucleify from 'nucleify'
 import { mockShareRequests } from '../../constants'
 
 describe('useShareRequests', (): void => {
-  const requests: atomic.ShareRequestsInterface = atomic.useShareRequests()
+  const requests: nucleify.ShareRequestsInterface = nucleify.useShareRequests()
 
   beforeEach((): void => {
     vi.clearAllMocks()
-    atomic.mockGlobalFetch(vi, mockShareRequests)
+    nucleify.mockGlobalFetch(vi, mockShareRequests)
   })
 
   it('loadAll fetches received, sent, and count', async (): Promise<void> => {

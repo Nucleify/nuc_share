@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NucShareCheckboxInterface } from 'atomic'
+import type { NucShareCheckboxInterface } from 'nucleify'
 
 const props = defineProps<NucShareCheckboxInterface>()
 

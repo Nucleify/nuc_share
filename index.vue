@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useShareRequests } from 'atomic'
+import { useShareRequests } from 'nucleify'
 
 defineProps<{
   position: PositionType

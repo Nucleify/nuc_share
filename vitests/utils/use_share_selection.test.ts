@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { ref } from 'vue'
 
-import { useShareSelection } from 'atomic'
+import { useShareSelection } from 'nucleify'
 
 describe('useShareSelection', (): void => {
   const mockItems = ref([{ id: 1 }, { id: 2 }, { id: 3 }])

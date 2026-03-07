@@ -30,8 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import type { ShareTabType } from 'atomic'
-import { useShareRequests } from 'atomic'
+import type { ShareTabType } from 'nucleify'
+import { useShareRequests } from 'nucleify'
 
 const activeTab = ref<ShareTabType>('received')
 

@@ -56,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
-import type { NucShareDialogInterface } from 'atomic'
-import { useShareDialog } from 'atomic'
+import type { NucShareDialogInterface } from 'nucleify'
+import { useShareDialog } from 'nucleify'
 
 const props = defineProps<NucShareDialogInterface>()
 const emits = defineEmits(['update:visible'])

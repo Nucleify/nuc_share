@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ShareRequestInterface } from 'atomic'
+import type { ShareRequestInterface } from 'nucleify'
 
 defineProps<{
   request: ShareRequestInterface
