@@ -2,6 +2,7 @@ import { computed, ref, watch } from 'vue'
 
 import type { NucFriendshipObjectInterface } from 'nucleify'
 import { apiHandle, friendshipRequests, useApiSuccess } from 'nucleify'
+
 import type {
   Friend,
   NucShareDialogInterface,
