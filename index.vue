@@ -29,4 +29,3 @@ onMounted(() => {
 <style lang="scss">
 @import 'index';
 </style>
-

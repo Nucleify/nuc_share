@@ -15,4 +15,3 @@ const props = defineProps<NucShareCheckboxInterface>()
 
 defineEmits(['toggle'])
 </script>
-

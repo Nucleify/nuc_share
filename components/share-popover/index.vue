@@ -1,10 +1,6 @@
 <template>
   <div class="share-popover-container">
-    <ad-heading
-      :tag="3"
-      text="Share Requests"
-      class="share-popover-header"
-    />
+    <ad-heading :tag="3" text="Share Requests" class="share-popover-header" />
 
     <div class="share-popover-content">
       <nuc-share-tabs
@@ -61,4 +57,3 @@ onMounted(() => {
 <style lang="scss">
 @import 'index';
 </style>
-

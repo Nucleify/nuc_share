@@ -4,13 +4,12 @@
       <div class="share-request-details">
         <p>{{ isReceived ? request.sender?.name : request.receiver?.name }}</p>
         <p class="share-request-meta">
-          {{ request.entity_ids.length }} {{ request.entity_type }}(s) • {{ formatDate(request.created_at) }}
+          {{ request.entity_ids.length }} {{ request.entity_type }}(s) •
+          {{ formatDate(request.created_at) }}
         </p>
       </div>
     </div>
-    <div class="share-request-actions">
-      <slot name="actions" />
-    </div>
+    <div class="share-request-actions"><slot name="actions" /></div>
   </div>
 </template>
 

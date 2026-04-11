@@ -23,7 +23,11 @@
           No items selected. Select items in the table first.
         </div>
 
-        <ad-heading :tag="5" text="Select Users" class="share-dialog-subtitle" />
+        <ad-heading
+          :tag="5"
+          text="Select Users"
+          class="share-dialog-subtitle"
+        />
 
         <div class="share-dialog-friends">
           <label
@@ -38,13 +42,8 @@
               @change="toggleFriend(friend.id)"
             />
             <div class="share-dialog-friend-info">
-              <span class="share-dialog-friend-name">
-                {{ friend.name }}
-              </span>
-              <span
-                v-if="friend.email"
-                class="share-dialog-friend-email"
-              >
+              <span class="share-dialog-friend-name"> {{ friend.name }} </span>
+              <span v-if="friend.email" class="share-dialog-friend-email">
                 {{ friend.email }}
               </span>
             </div>
@@ -77,4 +76,3 @@ const {
 <style lang="scss">
 @import 'index';
 </style>
-
