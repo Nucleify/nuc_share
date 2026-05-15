@@ -1,6 +1,9 @@
 .share-popover-container {
+  box-sizing: border-box;
   padding: 1em;
   height: 100%;
+  min-height: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -8,10 +11,13 @@
 
   .share-popover-header {
     margin: 0;
+    flex-shrink: 0;
   }
 
   .share-popover-content {
     flex: 1;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 1em;

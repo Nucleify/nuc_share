@@ -16,7 +16,7 @@ export function useShareDialog(
   }
 ): UseShareDialogInterface {
   const friends = ref<Friend[]>([])
-  const selectedFriendIds = ref<number[]>([])
+  const selectedFriendIds = ref<string[]>([])
   const loading = ref(false)
 
   const selectedEntities = computed(() => props.selectedEntities || [])
@@ -28,12 +28,19 @@ export function useShareDialog(
     loading.value = true
     await friendship.getAllFriendships()
     friends.value = (friendship.results.value || [])
-      .filter((f: NucFriendshipObjectInterface) => f.status === 'accepted')
-      .map((f: NucFriendshipObjectInterface) => ({
-        id: f.friend.id,
-        name: f.friend.name,
-        email: f.friend.email,
-      }))
+      .filter(
+        (f: NucFriendshipObjectInterface) =>
+          String(f.status ?? '').toLowerCase() === 'accepted'
+      )
+      .map((f: NucFriendshipObjectInterface) => {
+        const id = String(f.friend?.id ?? '').trim()
+        return {
+          id,
+          name: f.friend.name,
+          email: f.friend.email,
+        }
+      })
+      .filter((f) => f.id.length > 0)
     loading.value = false
   }
 
@@ -47,7 +54,7 @@ export function useShareDialog(
     { immediate: true }
   )
 
-  function toggleFriend(id: number): void {
+  function toggleFriend(id: string): void {
     const index = selectedFriendIds.value.indexOf(id)
     if (index === -1) {
       selectedFriendIds.value.push(id)
@@ -56,7 +63,7 @@ export function useShareDialog(
     }
   }
 
-  function isFriendSelected(id: number): boolean {
+  function isFriendSelected(id: string): boolean {
     return selectedFriendIds.value.includes(id)
   }
 

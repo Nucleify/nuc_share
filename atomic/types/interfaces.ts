@@ -24,6 +24,8 @@ export interface ShareRequestsInterface {
   pendingCount: Ref<number>
   loading: Ref<boolean>
   loadAll: () => Promise<void>
+  getReceived: () => Promise<void>
+  getSent: () => Promise<void>
   acceptRequest: (id: number) => Promise<void>
   rejectRequest: (id: number) => Promise<void>
   cancelRequest: (id: number) => Promise<void>

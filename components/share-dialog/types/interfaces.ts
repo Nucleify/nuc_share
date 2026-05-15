@@ -6,20 +6,21 @@ export interface NucShareDialogInterface {
   selectedEntities?: unknown[]
 }
 
+/** `id` = `user_profiles.id` (Supabase: UUID) lub legacy numeric id. */
 export interface Friend {
-  id: number
+  id: string
   name: string
   email?: string
 }
 
 export interface UseShareDialogInterface {
   friends: Ref<Friend[]>
-  selectedFriendIds: Ref<number[]>
+  selectedFriendIds: Ref<string[]>
   selectedEntities: ComputedRef<unknown[]>
   loading: Ref<boolean>
   isConfirmDisabled: ComputedRef<boolean>
   handleShare: () => Promise<void>
   handleCancel: () => void
-  toggleFriend: (id: number) => void
-  isFriendSelected: (id: number) => boolean
+  toggleFriend: (id: string) => void
+  isFriendSelected: (id: string) => boolean
 }

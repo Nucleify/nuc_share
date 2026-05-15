@@ -1,12 +1,12 @@
 <template>
   <ad-popover
-    v-if="!loading"
     dismissable
     icon="prime:inbox"
     :position="position"
     popover-class="share-inbox-popover"
     :button-text="isMobile() ? '' : 'Share Inbox'"
     button-class="share-inbox-toggle"
+    @show="loadAll"
   >
     <nuc-share-popover />
   </ad-popover>
@@ -19,11 +19,7 @@ defineProps<{
   position: PositionType
 }>()
 
-const { loading, loadAll } = useShareRequests()
-
-onMounted(() => {
-  loadAll()
-})
+const { loadAll } = useShareRequests()
 </script>
 
 <style lang="scss">

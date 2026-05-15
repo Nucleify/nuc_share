@@ -4,10 +4,22 @@ import { apiHandle, useApiSuccess, useLoading } from 'nucleify'
 
 import type { ShareRequestInterface, ShareRequestsInterface } from '../types'
 
+import { notifyShareEntityAccepted } from './share_entity_refresh_bus'
+
 // Global singleton state
 const received = ref<ShareRequestInterface[]>([])
 const sent = ref<ShareRequestInterface[]>([])
 const pendingCount = ref(0)
+
+/** Rozpakuj listę z `$fetch` / `apiHandle` (tablica albo `{ data: [...] }`). */
+function normalizeShareList(payload: unknown): ShareRequestInterface[] {
+  if (Array.isArray(payload)) return [...payload] as ShareRequestInterface[]
+  if (payload && typeof payload === 'object' && 'data' in payload) {
+    const inner = (payload as { data: unknown }).data
+    if (Array.isArray(inner)) return [...inner] as ShareRequestInterface[]
+  }
+  return []
+}
 
 export function useShareRequests(): ShareRequestsInterface {
   const { loading, setLoading } = useLoading()
@@ -18,7 +30,7 @@ export function useShareRequests(): ShareRequestsInterface {
       url: apiUrl() + '/share/received',
       setLoading,
       onSuccess: (response) => {
-        received.value = response ?? []
+        received.value = normalizeShareList(response)
       },
     })
   }
@@ -28,7 +40,7 @@ export function useShareRequests(): ShareRequestsInterface {
       url: apiUrl() + '/share/sent',
       setLoading,
       onSuccess: (response) => {
-        sent.value = response ?? []
+        sent.value = normalizeShareList(response)
       },
     })
   }
@@ -47,12 +59,16 @@ export function useShareRequests(): ShareRequestsInterface {
   }
 
   async function acceptRequest(id: number): Promise<void> {
+    const pending = received.value.find((r) => r.id === id)
+    const entityTypeForRefresh = pending?.entity_type
     await apiHandle<{ message: string }>({
       url: apiUrl() + '/share/' + id + '/accept',
       method: 'POST',
       setLoading,
       onSuccess: (response) => {
         apiSuccess(response, loadAll)
+        if (entityTypeForRefresh)
+          notifyShareEntityAccepted(String(entityTypeForRefresh))
       },
     })
   }
@@ -85,6 +101,8 @@ export function useShareRequests(): ShareRequestsInterface {
     pendingCount,
     loading,
     loadAll,
+    getReceived,
+    getSent,
     acceptRequest,
     rejectRequest,
     cancelRequest,

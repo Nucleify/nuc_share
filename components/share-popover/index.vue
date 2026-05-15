@@ -31,11 +31,24 @@ import { useShareRequests } from 'nucleify'
 
 const activeTab = ref<ShareTabType>('received')
 
-const { received, sent, loadAll, acceptRequest, rejectRequest, cancelRequest } =
-  useShareRequests()
+const {
+  received,
+  sent,
+  getReceived,
+  getSent,
+  acceptRequest,
+  rejectRequest,
+  cancelRequest,
+} = useShareRequests()
 
 const receivedRequests = computed(() => received.value ?? [])
 const sentRequests = computed(() => sent.value ?? [])
+
+/** Refetch when switching tabs so Sent/Received lists stay in sync after Teleport + @show races. */
+watch(activeTab, (tab) => {
+  if (tab === 'received') void getReceived()
+  if (tab === 'sent') void getSent()
+})
 
 async function handleAccept(id: number): Promise<void> {
   await acceptRequest(id)
@@ -48,10 +61,6 @@ async function handleReject(id: number): Promise<void> {
 async function handleCancel(id: number): Promise<void> {
   await cancelRequest(id)
 }
-
-onMounted(() => {
-  loadAll()
-})
 </script>
 
 <style lang="scss">

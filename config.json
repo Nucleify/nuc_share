@@ -1,7 +1,7 @@
 {
   "name": "nuc_share",
   "description": "Module that contains entity sharing functions.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "category": "core",
   "installed": true,
   "enabled": true
