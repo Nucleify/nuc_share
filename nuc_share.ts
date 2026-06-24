@@ -8,7 +8,7 @@ import {
   NucShareRequestsItem,
   NucShareRequestsList,
   NucShareTabs,
-} from '.'
+} from 'nucleify'
 
 export function registerNucShare(app: App<Element>): void {
   app

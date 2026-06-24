@@ -1,0 +1,43 @@
+.share-tabs {
+  display: flex;
+  gap: 0.5em;
+  flex-wrap: wrap;
+
+  .tab-button {
+    flex: 1;
+    min-width: 100px;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-shadow: none !important;
+
+    &.p-button:not(.p-button-text) {
+      background-color: $primary-color !important;
+      border-color: $primary-color !important;
+      color: #000 !important;
+
+      .p-button-label {
+        color: #000 !important;
+      }
+
+      &:hover {
+        background-color: $primary-hover-color !important;
+        border-color: $primary-hover-color !important;
+      }
+    }
+
+    &.p-button-text {
+      background: transparent !important;
+      border: none !important;
+      color: $primary-color !important;
+
+      .p-button-label {
+        color: $primary-color !important;
+      }
+
+      &:hover {
+        background: $primary-selected-color !important;
+        color: $primary-color !important;
+      }
+    }
+  }
+}

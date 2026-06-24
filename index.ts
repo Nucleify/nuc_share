@@ -1,16 +1,18 @@
-/**
- *  Module's main file export
- */
+export { default as NucShare } from './index.vue'
 export * from './nuc_share'
 
-/**
- *  Folders exports
- */
-export * from './atomic'
-export * from './components'
-
-
-/**
- *  Files exports
- */
-export { default as NucShare } from './index.vue'
+export { default as NucShareCheckbox } from './components/checkbox/index.vue'
+export * from './components/checkbox/interfaces'
+export * from './components/checkbox/utils/use_share_selection'
+export { default as NucShareDialog } from './components/dialog/index.vue'
+export * from './components/dialog/types/interfaces'
+export * from './components/dialog/utils/use_share_dialog'
+export { default as NucSharePopover } from './components/popover/index.vue'
+export { default as NucShareRequestsItem } from './components/requests-item/index.vue'
+export { default as NucShareRequestsList } from './components/requests-list/index.vue'
+export { default as NucShareTabs } from './components/tabs/index.vue'
+export * from './types/interfaces'
+export * from './types/variables'
+export * from './utils/requests'
+export * from './utils/share_entity_refresh'
+export * from './vitests/constants/share'

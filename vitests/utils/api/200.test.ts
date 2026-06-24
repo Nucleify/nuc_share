@@ -1,8 +1,7 @@
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest'
 
 import * as nucleify from 'nucleify'
-
-import { mockShareRequests } from '../../constants'
+import { mockShareRequests } from 'nucleify'
 
 describe('useShareRequests', (): void => {
   const requests: nucleify.ShareRequestsInterface = nucleify.useShareRequests()
@@ -15,21 +14,15 @@ describe('useShareRequests', (): void => {
   it('loadAll fetches received, sent, and count', async (): Promise<void> => {
     await requests.loadAll()
 
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/received'),
       expect.objectContaining({ method: 'GET' })
     )
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/sent'),
       expect.objectContaining({ method: 'GET' })
     )
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/count'),
       expect.objectContaining({ method: 'GET' })
     )
@@ -38,9 +31,7 @@ describe('useShareRequests', (): void => {
   it('acceptRequest sends POST to accept endpoint', async (): Promise<void> => {
     await requests.acceptRequest(1)
 
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/1/accept'),
       expect.objectContaining({ method: 'POST' })
     )
@@ -49,9 +40,7 @@ describe('useShareRequests', (): void => {
   it('rejectRequest sends POST to reject endpoint', async (): Promise<void> => {
     await requests.rejectRequest(1)
 
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/1/reject'),
       expect.objectContaining({ method: 'POST' })
     )
@@ -60,9 +49,7 @@ describe('useShareRequests', (): void => {
   it('cancelRequest sends POST to cancel endpoint', async (): Promise<void> => {
     await requests.cancelRequest(1)
 
-    expect(
-      (globalThis as unknown as { $fetch: Mock }).$fetch
-    ).toHaveBeenCalledWith(
+    expect(globalThis.fetch as Mock).toHaveBeenCalledWith(
       expect.stringContaining('share/1/cancel'),
       expect.objectContaining({ method: 'POST' })
     )

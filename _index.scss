@@ -19,8 +19,8 @@
   }
 
   @media (min-width: $lg) {
-    height: 100vh;
-    max-height: 100vh;
+    height: 100vh !important;
+    max-height: 100vh !important;
     max-width: 450px;
     margin-left: 3px;
   }
