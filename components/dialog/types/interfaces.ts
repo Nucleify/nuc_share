@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from 'vue'
 
 export interface NucShareDialogInterface {
-  adType?: string
+  nuiType?: string
   visible?: boolean
   selectedEntities?: unknown[]
 }

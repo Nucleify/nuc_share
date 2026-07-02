@@ -43,7 +43,7 @@ export function NucShareRequestsList({
             isReceived ? (
               <>
                 <AdButton
-                  adType="main"
+                  nuiType="main"
                   icon="prime:check"
                   text
                   rounded
@@ -59,7 +59,7 @@ export function NucShareRequestsList({
               </>
             ) : request.status === 'pending' ? (
               <AdButton
-                adType="main"
+                nuiType="main"
                 icon="prime:times"
                 text
                 rounded

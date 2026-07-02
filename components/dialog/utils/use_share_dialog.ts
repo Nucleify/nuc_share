@@ -83,7 +83,7 @@ export function useShareDialog(
       method: 'POST',
       data: {
         entity_ids: entityIds,
-        entity_type: props.adType,
+        entity_type: props.nuiType,
         user_ids: selectedFriendIds.value,
       },
       setLoading: (val: boolean) => {

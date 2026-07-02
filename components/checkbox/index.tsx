@@ -4,7 +4,7 @@ import type { NucShareCheckboxInterface } from 'nucleify'
 import { AdCheckbox } from 'nucleify'
 
 export function NucShareCheckbox({
-  adType,
+  nuiType,
   checked,
   indeterminate,
   isAll,
@@ -16,7 +16,7 @@ export function NucShareCheckbox({
 
   return (
     <AdCheckbox
-      adType={adType}
+      nuiType={nuiType}
       checked={checked ?? false}
       indeterminate={isAll ? indeterminate : undefined}
       onClick={stopPropagation}

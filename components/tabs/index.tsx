@@ -19,14 +19,14 @@ export function NucShareTabs({
   return (
     <div className="share-tabs">
       <AdButton
-        adType="main"
+        nuiType="main"
         label="Received"
         text={activeTab !== 'received'}
         className="tab-button"
         onClick={() => onUpdateActiveTab('received')}
       />
       <AdButton
-        adType="main"
+        nuiType="main"
         label="Sent"
         text={activeTab !== 'sent'}
         className="tab-button"

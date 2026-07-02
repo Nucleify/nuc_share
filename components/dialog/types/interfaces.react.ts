@@ -1,5 +1,5 @@
 export interface NucShareDialogInterface {
-  adType?: AdTypeType
+  nuiType?: NuiTypeType
   visible?: boolean
   selectedEntities?: unknown[]
   onUpdateVisible: (visible: boolean) => void

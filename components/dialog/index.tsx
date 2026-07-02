@@ -24,11 +24,11 @@ export function NucShareDialog(props: NucShareDialogInterface): JSX.Element {
     isFriendSelected,
   } = useShareDialog(props)
 
-  const { adType, visible } = props
+  const { nuiType, visible } = props
 
   return (
     <NucDialog
-      entity={adType as ObjectNameType}
+      entity={nuiType as ObjectNameType}
       visible={!!visible}
       modal
       draggable={false}
@@ -68,7 +68,7 @@ export function NucShareDialog(props: NucShareDialogInterface): JSX.Element {
               friends.map((friend) => (
                 <label key={friend.id} className="share-dialog-friend">
                   <NucShareCheckbox
-                    adType={adType}
+                    nuiType={nuiType}
                     checked={isFriendSelected(friend.id)}
                     onToggle={() => toggleFriend(friend.id)}
                   />

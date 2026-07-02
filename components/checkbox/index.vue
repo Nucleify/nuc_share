@@ -1,6 +1,6 @@
 <template>
   <ad-checkbox
-    :ad-type="props.adType"
+    :nui-type="props.nuiType"
     :model-value="props.checked"
     :indeterminate="props.isAll ? props.indeterminate : undefined"
     :binary="true"

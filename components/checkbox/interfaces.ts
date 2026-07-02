@@ -1,5 +1,5 @@
 export interface NucShareCheckboxInterface {
-  adType?: AdTypeType
+  nuiType?: NuiTypeType
   checked?: boolean
   indeterminate?: boolean
   isAll?: boolean

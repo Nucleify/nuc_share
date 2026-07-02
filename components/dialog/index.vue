@@ -1,6 +1,6 @@
 <template>
   <nuc-dialog
-    :entity="props.adType"
+    :entity="props.nuiType"
     :visible="props.visible && !loading"
     :modal="true"
     :draggable="false"
@@ -36,7 +36,7 @@
             class="share-dialog-friend"
           >
             <ad-checkbox
-              :ad-type="props.adType"
+              :nui-type="props.nuiType"
               :model-value="isFriendSelected(friend.id)"
               :binary="true"
               @change="toggleFriend(friend.id)"

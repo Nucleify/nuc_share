@@ -1,14 +1,14 @@
 <template>
   <div class="share-tabs">
     <ad-button
-      ad-type="main"
+      nui-type="main"
       label="Received"
       :text="activeTab !== 'received'"
       class="tab-button"
       @click="$emit('update:activeTab', 'received')"
     />
     <ad-button
-      ad-type="main"
+      nui-type="main"
       label="Sent"
       :text="activeTab !== 'sent'"
       class="tab-button"

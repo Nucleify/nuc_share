@@ -13,7 +13,7 @@
         <template #actions>
           <template v-if="isReceived">
             <ad-button
-              ad-type="main"
+              nui-type="main"
               icon="prime:check"
               text
               rounded
@@ -30,7 +30,7 @@
           <template v-else>
             <ad-button
               v-if="request.status === 'pending'"
-              ad-type="main"
+              nui-type="main"
               icon="prime:times"
               text
               rounded
